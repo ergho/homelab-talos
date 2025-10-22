@@ -47,6 +47,7 @@
               sops
               age
               lefthook
+              yamlfmt
               # Add more tools here if needed
             ];
 
