@@ -46,6 +46,7 @@
               fluxcd
               sops
               age
+              lefthook
               # Add more tools here if needed
             ];
 
