@@ -31,8 +31,18 @@
         {
           default = pkgs.mkShell {
             packages = with pkgs; [
+              bitwarden-cli
+              helmfile
+              just
               kubectl
+              kubectl-view-secret
+              kustomize
+              kubernetes-helm
               talosctl
+              yq-go
+              jq
+              minijinja
+              gum
               # Add more tools here if needed
             ];
 
@@ -50,8 +60,8 @@
               echo ""
 
               # Set local Talos and Kubernetes config paths
-              export TALOSCONFIG="$PWD/talos-config/talosconfig.yaml"
-              export KUBECONFIG="$PWD/kube-config.yaml"
+              export TALOSCONFIG="$PWD/talosconfig"
+              export KUBECONFIG="$PWD/kubeconfig"
 
               # Check configs
               if [ -f "$TALOSCONFIG" ]; then

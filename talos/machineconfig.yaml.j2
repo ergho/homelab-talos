@@ -1,0 +1,159 @@
+version: v1alpha1 # Indicates the schema used to decode the contents.
+machine:
+  # The root certificate authority of the PKI.
+  ca:
+    crt: {{ MACHINE_CA_CRT }}
+    key: {{ MACHINE_CA_KEY }}
+  # Extra certificate subject alternative names for the machine's certificate.
+  features:
+    apidCheckExtKeyUsage: true # Enable checks for extended key usage of client certificates in apid.
+    diskQuotaSupport: true # Enable XFS project quota support for EPHEMERAL partition and user disks.
+    hostDNS:
+      enabled: true # Enable host DNS caching resolver.
+      forwardKubeDNSToHost: false # Use the host DNS resolver as upstream for Kubernetes CoreDNS pods.
+      resolveMemberNames: true
+    kubePrism:
+      enabled: true # Enable KubePrism support - will start local load balancing prox
+      port: 7445 # KubePrism port.
+    rbac: true # Enable role-based access control (RBAC).
+    stableHostname: true # Enable stable default hostname.
+
+  files:
+    - path: /etc/cri/conf.d/20-customization.part
+      op: create
+      content: |
+        [plugins."io.containerd.cri.v1.runtime"]
+          cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
+  install:
+    disk: /dev/nvme0n1 # The disk used for installations.
+    image: factory.talos.dev/metal-installer/9c5c9cb371a1e2e3d5633b1e813c221535a19664434126415d0838b8de8fe1a1:v1.11.3
+    wipe: false # Indicates if the installation disk should be wiped at installation time.
+  # kernel:
+  #     # Kernel modules to load.
+  #     modules:
+  #         - name: brtfs # Module name.
+  #
+  kubelet:
+    defaultRuntimeSeccompProfileEnabled: true # Enable container runtime default Seccomp profile.
+    disableManifestsDirectory: true # The `disableManifestsDirectory` field configures the kubelet to get static pod manifests from the /etc/kubernetes/manifests directory.
+    extraConfig:
+      featureGates:
+        ImageVolume: true
+        ResourceHealthStatus: true
+      serializeImagePulls: false
+    image: ghcr.io/siderolabs/kubelet:v1.34.1 # The `image` field is an optional reference to an alternative kubelet image.
+    nodeIP:
+      validSubnets:
+        - 192.168.90.0/24
+  network: {}
+  # Configures the node labels for the machine.
+  nodeLabels:
+    node.kubernetes.io/gpu: "true"
+    topology.kubernetes.io/region: main
+  sysctls:
+    fs.inotify.max_user_instances: "8192"
+    fs.inotify.max_user_watches: "1048576"
+    net.core.default_qdisc: fq
+    net.core.rmem_max: "67108864"
+    net.core.wmem_max: "67108864"
+    net.ipv4.neigh.default.gc_thresh1: "4096"
+    net.ipv4.neigh.default.gc_thresh2: "8192"
+    net.ipv4.neigh.default.gc_thresh3: "16384"
+    net.ipv4.tcp_congestion_control: bbr
+    net.ipv4.tcp_fastopen: "3"
+    net.ipv4.tcp_mtu_probing: "1"
+    net.ipv4.tcp_rmem: 4096 87380 33554432
+    net.ipv4.tcp_window_scaling: "1"
+    net.ipv4.tcp_wmem: 4096 65536 33554432
+    sunrpc.tcp_max_slot_table_entries: "128"
+    sunrpc.tcp_slot_table_entries: "128"
+    user.max_user_namespaces: "11255"
+    vm.nr_hugepages: "1024"
+  type: controlplane # Defines the role of the machine within the cluster.
+  token: {{ MACHINE_TOKEN }} # The `token` is used by a machine to join the PKI of the cluster.
+cluster:
+  # The base64 encoded root certificate authority used by Kubernetes.
+  ca:
+    crt: {{ CLUSTER_CA_CRT }}
+    key: {{ CLUSTER_CA_KEY }}
+  clusterName: testing # Configures the cluster's name.
+  # Provides control plane specific configuration options.
+  controlPlane:
+    endpoint: https://192.168.90.14:6443 # Endpoint is the canonical controlplane endpoint, which can be an IP address or a DNS hostname.
+  # Configures cluster member discovery.
+  discovery:
+    enabled: true # Enable the cluster membership discovery feature.
+    registries:
+      kubernetes:
+        disabled: true
+      service:
+        disabled: false
+  id: {{ CLUSTER_ID }} # Globally unique identifier for this cluster (base64 encoded random 32 bytes).
+  network:
+    cni:
+      name: none
+    dnsDomain: cluster.local # The domain used by Kubernetes DNS.
+    podSubnets:
+      - 10.244.0.0/16
+    serviceSubnets:
+      - 10.96.0.0/12
+  secret: {{ CLUSTER_SECRET }}
+  token: {{ CLUSTER_TOKEN }}
+  aggregatorCA:
+    crt: {{ CLUSTER_AGGREGATORCA_CRT }}
+    key: {{ CLUSTER_AGGREGATORCA_KEY }}
+  # The base64 encoded private key for service account token generation.
+  allowSchedulingOnControlPlanes: true
+  apiServer:
+    auditPolicy:
+      apiVersion: audit.k8s.io/v1
+      kind: Policy
+      rules:
+        - level: Metadata
+    certSANs:
+      - 192.168.90.14
+    disablePodSecurityPolicy: true # Disable PodSecurityPolicy in the API server and default manifests.
+    extraArgs:
+      enable-aggregator-routing: "true"
+      feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true,ResourceHealthStatus=true
+      runtime-config: admissionregistration.k8s.io/v1beta1=true
+    image: registry.k8s.io/kube-apiserver:v1.34.1 # The container image used in the API server manifest.
+  controllerManager:
+    extraArgs:
+      bind-address: 0.0.0.0
+    image: registry.k8s.io/kube-controller-manager:v1.34.1 # The container image used in the controller manager manifest.
+  coreDNS:
+    disabled: true
+  etcd:
+    ca:
+      crt: {{ CLUSTER_ETCD_CA_CRT }}
+      key: {{ CLUSTER_ETCD_CA_KEY }}
+    extraArgs:
+      listen-metrics-urls: http://0.0.0.0:2381
+  proxy:
+    image: registry.k8s.io/kube-proxy:v1.34.1 # The container image used in the kube-proxy manifest.
+    disabled: true
+  scheduler:
+    config:
+      apiVersion: kubescheduler.config.k8s.io/v1
+      kind: KubeSchedulerConfiguration
+      profiles:
+        - schedulerName: default-scheduler
+          plugins:
+            score:
+              disabled:
+                - name: ImageLocality
+          pluginConfig:
+            - name: PodTopologySpread
+              args:
+                defaultingType: List
+                defaultConstraints:
+                  - maxSkew: 1
+                    topologyKey: kubernetes.io/hostname
+                    whenUnsatisfiable: ScheduleAnyway
+    extraArgs:
+      bind-address: 0.0.0.0
+    image: registry.k8s.io/kube-scheduler:v1.34.1 # The container image used in the scheduler manifest.
+  secretboxEncryptionSecret: {{ CLUSTER_SECRETBOXENCRYPTIONSECRET }}
+  serviceAccount:
+    key: {{ CLUSTER_SERVICEACCOUNT_KEY }}
