@@ -43,6 +43,9 @@
               jq
               minijinja
               gum
+              fluxcd
+              sops
+              age
               # Add more tools here if needed
             ];
 

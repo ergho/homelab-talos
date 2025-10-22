@@ -5,7 +5,7 @@ metadata:
   name: sops-age-secret
   namespace: flux-system
 stringData:
-  age.agekey: asd
+  age.agekey: {{ SOPS_PRIVATE_KEY }}
 ---
 apiVersion: v1
 kind: Secret

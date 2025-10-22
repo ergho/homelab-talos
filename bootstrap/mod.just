@@ -19,7 +19,7 @@ talos:
         just log info "Talos already configured, skipping apply of config" "stage" "$0" "node" "$n"; \
         continue; \
       fi; \
-      just log fatal "Failed to apply Talos configuration" "stage" "$0" "node" "$n" "output" "$be"; \
+      just log fatal "Failed to apply Talos configuration" "stage" "$0" "node" "$n" "output" "$op"; \
     fi; \
   done
 
