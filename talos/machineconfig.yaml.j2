@@ -157,3 +157,28 @@ cluster:
   secretboxEncryptionSecret: {{ CLUSTER_SECRETBOXENCRYPTIONSECRET }}
   serviceAccount:
     key: {{ CLUSTER_SERVICEACCOUNT_KEY }}
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: EPHEMERAL
+provisioning:
+  diskSelector:
+    match: system_disk
+    minSize: 2GiB
+    maxSize: 200GiB
+    grow: false
+
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-hostpath
+provisioning:
+  diskSelector:
+    match: system_disk
+    minSize: 400GiB
+    grow: false
+---
+apiVersion: v1alpha1
+kind: WatchdogTimerConfig
+device: /dev/watchdog0
+timeout: 5m
