@@ -84,6 +84,8 @@ spec:
             namespace: network
             sectionName: https
     persistence:
+      config:
+        existingClaim: "{{ .Release.Name }}"
       media:
         type: nfs
         server: truenas.ergho.org
