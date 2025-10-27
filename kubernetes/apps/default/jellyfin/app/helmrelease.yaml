@@ -85,7 +85,10 @@ spec:
             sectionName: https
     persistence:
       config:
-        existingClaim: "{{ .Release.Name }}"
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 60Gi
+        storageClass: openebs-hostpath
       media:
         type: nfs
         server: truenas.ergho.org
