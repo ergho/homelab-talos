@@ -111,7 +111,7 @@ cluster:
       rules:
         - level: Metadata
     certSANs:
-      - 192.168.90.14
+      - talos-test.ergho.org
     disablePodSecurityPolicy: true # Disable PodSecurityPolicy in the API server and default manifests.
     extraArgs:
       enable-aggregator-routing: "true"
@@ -159,7 +159,7 @@ cluster:
     key: {{ CLUSTER_SERVICEACCOUNT_KEY }}
 ---
 apiVersion: v1alpha1
-kind: UserVolumeConfig
+kind: VolumeConfig
 name: EPHEMERAL
 provisioning:
   diskSelector:
