@@ -89,6 +89,10 @@ spec:
         accessMode: ReadWriteOnce
         size: 60Gi
         storageClass: openebs-hostpath
+        advancedMounts:
+          jellyfin:
+            app:
+              - path: /config
       media:
         type: nfs
         server: truenas.ergho.org
