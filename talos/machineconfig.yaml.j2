@@ -79,7 +79,7 @@ cluster:
   clusterName: testing # Configures the cluster's name.
   # Provides control plane specific configuration options.
   controlPlane:
-    endpoint: https://talos-test.ergho.org:6443 # Endpoint is the canonical controlplane endpoint, which can be an IP address or a DNS hostname.
+    endpoint: https://k8s.internal:6443 # Endpoint is the canonical controlplane endpoint, which can be an IP address or a DNS hostname.
   # Configures cluster member discovery.
   discovery:
     enabled: true # Enable the cluster membership discovery feature.
@@ -111,7 +111,7 @@ cluster:
       rules:
         - level: Metadata
     certSANs:
-      - talos-test.ergho.org
+      - k8s.internal
     disablePodSecurityPolicy: true # Disable PodSecurityPolicy in the API server and default manifests.
     extraArgs:
       enable-aggregator-routing: "true"
