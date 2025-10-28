@@ -65,5 +65,5 @@ spec:
       data:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
-        size: 5gi
+        size: 5Gi
         storageClass: openebs-hostpath
