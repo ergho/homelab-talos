@@ -11,9 +11,6 @@ spec:
       labels:
         kubevirt.io/domain: ubuntu-vm
     spec:
-      networks:
-        - name: default
-          pod: {}
       domain:
         devices:
           disks:
@@ -29,6 +26,9 @@ spec:
         resources:
           requests:
             memory: 1Gi
+      networks:
+        - name: default
+          pod: {}
       volumes:
         - name: rootdisk
           dataVolume:
