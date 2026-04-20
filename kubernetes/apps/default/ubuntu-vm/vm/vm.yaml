@@ -21,13 +21,13 @@ spec:
               disk:
                 bus: virtio
           interfaces:
-            - name: default
+            - name: podnet
               masquerade: {}
         resources:
           requests:
             memory: 1Gi
       networks:
-        - name: default
+        - name: podnet
           pod: {}
       volumes:
         - name: rootdisk
