@@ -7,3 +7,4 @@ namespace: kubevirt
 resources:
   - ./namespace.yaml
   - ./kubevirt/ks.yaml
+  - ./cdi/ks.yaml
