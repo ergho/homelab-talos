@@ -20,7 +20,7 @@ metadata:
   name: kubevirt-cluster
 spec:
   dependsOn:
-    - kubevirt-operator
+    - name: kubevirt-operator
   interval: 1h
   path: ./kubernetes/apps/kubevirt/kubevirt/app
   prune: true
