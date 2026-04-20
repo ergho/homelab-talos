@@ -2,10 +2,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: kubevirt-operator
+  name: cdi-operator
 spec:
   interval: 1h
-  path: ./kubernetes/apps/kubevirt/kubevirt/operator
+  path: ./kubernetes/apps/kubevirt/cdi/operator
   prune: true
   sourceRef:
     kind: GitRepository
@@ -20,9 +20,9 @@ metadata:
   name: kubevirt-cluster
 spec:
   dependsOn:
-    - name: kubevirt-operator
+    - name: cdi-operator
   interval: 1h
-  path: ./kubernetes/apps/kubevirt/kubevirt/cluster
+  path: ./kubernetes/apps/kubevirt/cdi/cdi
   prune: true
   sourceRef:
     kind: GitRepository
