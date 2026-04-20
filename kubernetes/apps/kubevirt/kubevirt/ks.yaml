@@ -13,3 +13,19 @@ spec:
     namespace: flux-system
   targetNamespace: kubevirt
   wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kubevirt-cluster
+spec:
+  dependsOn:
+    - kubevirt-operator
+  interval: 1h
+  path: ./kubernetes/apps/kubevirt/kubevirt/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: kubevirt
