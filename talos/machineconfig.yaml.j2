@@ -26,7 +26,7 @@ machine:
           cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
   install:
     disk: /dev/nvme0n1 # The disk used for installations.
-    image: factory.talos.dev/metal-installer/9c5c9cb371a1e2e3d5633b1e813c221535a19664434126415d0838b8de8fe1a1:v1.11.3
+    image: factory.talos.dev/metal-installer/5d27e24a8b9bc408f6b165327cdb0d39d19143b7a548e10c7ba60f48a4d9ebff:v1.12.6
     wipe: false # Indicates if the installation disk should be wiped at installation time.
   # kernel:
   #     # Kernel modules to load.
@@ -41,7 +41,7 @@ machine:
         ImageVolume: true
         ResourceHealthStatus: true
       serializeImagePulls: false
-    image: ghcr.io/siderolabs/kubelet:v1.34.1 # The `image` field is an optional reference to an alternative kubelet image.
+    image: ghcr.io/siderolabs/kubelet:v1.35.3 # The `image` field is an optional reference to an alternative kubelet image.
     nodeIP:
       validSubnets:
         - 192.168.90.0/24
@@ -117,11 +117,11 @@ cluster:
       enable-aggregator-routing: "true"
       feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true,ResourceHealthStatus=true
       runtime-config: admissionregistration.k8s.io/v1beta1=true
-    image: registry.k8s.io/kube-apiserver:v1.34.1 # The container image used in the API server manifest.
+    image: registry.k8s.io/kube-apiserver:v1.35.3 # The container image used in the API server manifest.
   controllerManager:
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-controller-manager:v1.34.1 # The container image used in the controller manager manifest.
+    image: registry.k8s.io/kube-controller-manager:v1.35.3 # The container image used in the controller manager manifest.
   coreDNS:
     disabled: true
   etcd:
@@ -131,7 +131,7 @@ cluster:
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
   proxy:
-    image: registry.k8s.io/kube-proxy:v1.34.1 # The container image used in the kube-proxy manifest.
+    image: registry.k8s.io/kube-proxy:v1.35.3 # The container image used in the kube-proxy manifest.
     disabled: true
   scheduler:
     config:
@@ -153,7 +153,7 @@ cluster:
                     whenUnsatisfiable: ScheduleAnyway
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-scheduler:v1.34.1 # The container image used in the scheduler manifest.
+    image: registry.k8s.io/kube-scheduler:v1.35.3 # The container image used in the scheduler manifest.
   secretboxEncryptionSecret: {{ CLUSTER_SECRETBOXENCRYPTIONSECRET }}
   serviceAccount:
     key: {{ CLUSTER_SERVICEACCOUNT_KEY }}
