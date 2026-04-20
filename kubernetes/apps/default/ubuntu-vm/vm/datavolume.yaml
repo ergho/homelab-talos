@@ -1,0 +1,16 @@
+---
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: DataVolume
+metadata:
+  name: ubuntu-dv
+  namespace: default
+spec:
+  source:
+    http:
+      url: https://cloud-images.ubuntu.com/daily/server/resolute/current/resolute-server-cloudimg-amd64.img
+  pvc:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 30Gi

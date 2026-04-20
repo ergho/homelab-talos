@@ -1,0 +1,42 @@
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: ubuntu-vm
+  namespace: default
+spec:
+  running: true
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: ubuntu-vm
+    spec:
+      domain:
+        devices:
+          disks:
+            - name: rootdisk
+              disk:
+                bus: virtio
+            - name: cloudinit
+              disk:
+                bus: virtio
+        resources:
+          requests:
+            memory: 1Gi
+      volumes:
+        - name: rootdisk
+          dataVolume:
+            name: ubuntu-dv
+        - name: cloudinit
+          cloudInitNoCloud:
+            userData: |-
+              #cloud-config
+              users:
+                - name: ubuntu
+                  sudo: ALL=(ALL) NOPASSWD:ALL
+                  groups: users, admin
+                  shell: /bin/bash
+                  lock_passwd: false
+                  passwd: $6$Bm/.5mAJ/ZajgrP3$HJ2DWNeCpi7aAZEV.zwqkte1hJJYQ98HE86n83XBJ3wiCTsD10k3.WYo.LkVgUjn3hr047hQAtvg5Illi.nTO0
+              ssh_pwauth: true
+              disable_root: false
