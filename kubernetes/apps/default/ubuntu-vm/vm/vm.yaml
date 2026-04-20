@@ -11,6 +11,9 @@ spec:
       labels:
         kubevirt.io/domain: ubuntu-vm
     spec:
+      networks:
+        - name: default
+          pod: {}
       domain:
         devices:
           disks:
@@ -20,6 +23,9 @@ spec:
             - name: cloudinit
               disk:
                 bus: virtio
+          interfaces:
+            - name: default
+              masquerade: {}
         resources:
           requests:
             memory: 1Gi
