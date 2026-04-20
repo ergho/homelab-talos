@@ -5,3 +5,5 @@ metadata:
   name: _
   annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
+    pod-security.kubernetes.io/enforce: "privileged"
+    kubevirt.io: ""
