@@ -20,7 +20,7 @@ spec:
     bpf:
       datapathMode: veth
       hostRouting: false
-      masquerade: true
+      masquerade: false
       preallocateMaps: true
       tproxy: true
     bpfClockProbe: true
