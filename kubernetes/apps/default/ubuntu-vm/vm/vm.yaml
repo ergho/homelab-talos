@@ -21,14 +21,14 @@ spec:
               disk:
                 bus: virtio
           interfaces:
-            - name: podnet
-              masquerade: {}
+            - name: default
+              bridge: {}
               macAddress: "02:de:ad:be:ef:01"
         resources:
           requests:
             memory: 1Gi
       networks:
-        - name: podnet
+        - name: default
           pod: {}
       volumes:
         - name: rootdisk
