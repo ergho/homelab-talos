@@ -19,6 +19,9 @@ spec:
       masquerade: false
       preallocateMaps: true
       tproxy: true
+    hostLegacyRouting: true # Essential: Let traffic hit the iptables hooks
+    socketLB:
+      hostNamespaceOnly: true # Prevents Cilium from breaking VM socket logic
     bpfClockProbe: true
     bgpControlPlane:
       enabled: true
