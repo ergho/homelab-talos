@@ -5,7 +5,7 @@ metadata:
   annotations:
     lbipam.cilium.io/ips: 192.168.90.244
   labels:
-    kubevirt.io/vm: ubuntu-vm
+    kubevirt.io/domain: ubuntu-vm
   name: ubuntu-vm
 spec:
   externalTrafficPolicy: Local
@@ -15,6 +15,6 @@ spec:
       protocol: TCP
       targetPort: 22
   selector:
-    kubevirt.io/vm: ubuntu-vm
+    kubevirt.io/domain: ubuntu-vm
   type: LoadBalancer
 
