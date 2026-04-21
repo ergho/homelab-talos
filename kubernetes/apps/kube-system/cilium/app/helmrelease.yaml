@@ -14,8 +14,12 @@ spec:
     bandwidthManager:
       enabled: true
       bbr: true
+    socketLB:
+      enabled: true
+      hostNamespaceOnly: true
     bpf:
-      datapathMode: netkit-l2
+      datapathMode: veth
+      hostRouting: false
       masquerade: true
       preallocateMaps: true
       tproxy: true
