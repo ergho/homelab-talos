@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    lbipam.cilium.io/ips: 192.168.90.247
+  labels:
+    kubevirt.io/domain: rocky-vm-1
+  name: rocky-vm-1
+spec:
+  externalTrafficPolicy: Local
+  ports:
+    - name: ssh
+      port: 22
+      protocol: TCP
+      targetPort: 22
+  selector:
+    kubevirt.io/domain: rocky-vm-1
+  type: LoadBalancer
+

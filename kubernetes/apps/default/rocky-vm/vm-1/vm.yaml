@@ -1,0 +1,49 @@
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: rocky-vm-1
+  namespace: default
+spec:
+  running: true
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: rocky-vm-1
+    spec:
+      domain:
+        devices:
+          disks:
+            - name: rootdisk
+              disk:
+                bus: virtio
+            - name: cloudinit
+              disk:
+                bus: virtio
+          interfaces:
+            - name: default
+              bridge: {}
+              macAddress: "02:de:ad:be:ef:01"
+        resources:
+          requests:
+            memory: 1Gi
+      networks:
+        - name: default
+          pod: {}
+      volumes:
+        - name: rootdisk
+          dataVolume:
+            name: rocky-dv-1
+        - name: cloudinit
+          cloudInitNoCloud:
+            userData: |-
+              #cloud-config
+              users:
+                - name: rocky
+                  sudo: ALL=(ALL) NOPASSWD:ALL
+                  groups: users, admin, wheel
+                  shell: /bin/bash
+                  lock_passwd: false
+                  passwd: $6$Bm/.5mAJ/ZajgrP3$HJ2DWNeCpi7aAZEV.zwqkte1hJJYQ98HE86n83XBJ3wiCTsD10k3.WYo.LkVgUjn3hr047hQAtvg5Illi.nTO0
+              ssh_pwauth: true
+              disable_root: false

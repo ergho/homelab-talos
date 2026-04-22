@@ -1,0 +1,42 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: rocky-vm-1
+spec:
+  dependsOn:
+    - name: openebs
+      namespace: openebs-system
+    - name: cdi
+      namespace: kubevirt
+  interval: 1h
+  path: ./kubernetes/apps/default/rocky-vm/vm-1
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: default
+  wait: false
+  #---
+  ## yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+  #apiVersion: kustomize.toolkit.fluxcd.io/v1
+  #kind: Kustomization
+  #metadata:
+  #  name: rocky-vm-2
+  #spec:
+  #  dependsOn:
+  #    - name: openebs
+  #      namespace: openebs-system
+  #    - name: cdi
+  #      namespace: kubevirt
+  #  interval: 1h
+  #  path: ./kubernetes/apps/default/rocky-vm/vm-2
+  #  prune: true
+  #  sourceRef:
+  #    kind: GitRepository
+  #    name: flux-system
+  #    namespace: flux-system
+  #  targetNamespace: default
+  #  wait: false
