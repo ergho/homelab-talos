@@ -32,7 +32,7 @@ spec:
       volumes:
         - name: rootdisk
           dataVolume:
-            name: rocky-dv-1
+            name: rocky-vm-1
         - name: cloudinit
           cloudInitNoCloud:
             userData: |-
