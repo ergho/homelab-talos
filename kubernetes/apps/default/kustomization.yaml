@@ -9,3 +9,4 @@ resources:
   - ./fusion/ks.yaml
   - ./jellyfin/ks.yaml
   - ./ubuntu-vm/ks.yaml
+  - ./rocky-vm/ks.yaml
