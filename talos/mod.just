@@ -21,16 +21,14 @@ download-image version schematic:
         "https://factory.talos.dev/image/{{ schematic }}/{{ version }}/metal-amd64.iso"
     just log info "Downloaded Talos" version "{{ version }}" schematic "{{ schematic }}"
 
-
 [doc('Generate schematic ID from Talos schematic')]
-gen-schematic-id:
-    curl -sX POST --data-binary @<(just template "{{ talos_dir }}/schematic.yaml.j2") "https://factory.talos.dev/schematics" | jq -r '.id'
+gen-schematic-id node:
+    curl -sX POST --data-binary @<(just template "{{ talos_dir }}/nodes/schematic-{{ node }}.yaml") "https://factory.talos.dev/schematics" | jq -r '.id'
 
 [doc('Reboot a node')]
 reboot-node node:
     gum confirm "Reboot node {{ node }}?" --default="No" && \
         talosctl -n {{ node }} reboot -m powercycle || exit 0
-
 
 [doc('Render Talos config for a node')]
 render-config node:
@@ -60,6 +58,6 @@ upgrade-node node:
 machine-controller node:
     just template "{{ talos_dir }}/nodes/{{ node }}.yaml.j2" | yq -e 'select(.machine) | (.machine.type == "controlplane") // ""'
 
-[private]
-machine-image:
-    just template "{{ talos_dir }}/machineconfig.yaml.j2" | yq -e 'select(.machine) | .machine.install.image'
+# [private]
+machine-image node:
+    just template "{{ talos_dir }}/nodes/{{ node }}.yaml.j2" | yq -e 'select(.machine) | .machine.install.image'

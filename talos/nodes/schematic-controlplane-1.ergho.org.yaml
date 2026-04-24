@@ -14,8 +14,11 @@ customization:
     - security=none # Less security, faster puter
     - sysctl.kernel.kexec_load_disabled=1 # Meteor Lake CPU & Intel iGPU
     - talos.auditd.disabled=1 # Less security, faster puter
+    - i915.force_probe=!a7a0 # Disable iGPU deviceID for i915
+    - xe.force_probe=a7a0 # Enable iGPU deviceID for xe
   systemExtensions:
     officialExtensions:
+      - siderolabs/xe
       - siderolabs/i915 # Intel iGPU
       - siderolabs/intel-ucode # Intel iGPU
       - siderolabs/mei # Intel iGPU

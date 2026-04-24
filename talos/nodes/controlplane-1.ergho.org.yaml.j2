@@ -1,7 +1,42 @@
 ---
 machine:
+  install:
+    disk: /dev/nvme0n1
+    image: factory.talos.dev/metal-installer/5d27e24a8b9bc408f6b165327cdb0d39d19143b7a548e10c7ba60f48a4d9ebff:v1.12.6
+    wipe: false
+  kernel:
+    modules:
+      - name: kvm
+
   network:
     hostname: controlplane-1.ergho.org
   nodeLabels:
+    node.kubernetes.io/gpu: "true"
     topology.kubernetes.io/zone: m
   type: controlplane
+
+---
+apiVersion: v1alpha1
+kind: VolumeConfig
+name: EPHEMERAL
+provisioning:
+  diskSelector:
+    match: system_disk
+  minSize: 2GiB
+  maxSize: 200GiB
+  grow: false
+
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-hostpath
+provisioning:
+  diskSelector:
+    match: system_disk
+  minSize: 400GiB
+  grow: false
+---
+apiVersion: v1alpha1
+kind: WatchdogTimerConfig
+device: /dev/watchdog0
+timeout: 5m
