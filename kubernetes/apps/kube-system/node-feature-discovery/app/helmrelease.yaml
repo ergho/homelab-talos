@@ -23,6 +23,7 @@ spec:
     master:
       replicaCount: 1
     worker:
+      replicaCount: 1
       config:
         core:
           labelSources:
