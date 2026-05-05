@@ -12,6 +12,9 @@ spec:
         kubevirt.io/domain: ubuntu-vm
     spec:
       domain:
+        firmware:
+          bootloader:
+            kernelArguments: "init=/bin/bash"
         devices:
           disks:
             - name: rootdisk
