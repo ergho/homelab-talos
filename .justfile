@@ -1,15 +1,20 @@
 #!/usr/bin/env -S just --justfile
 
+set lazy := true
 set quiet := true
 set shell := ['bash', '-euo', 'pipefail', '-c']
 
-mod bootstrap
-mod talos
-mod kubernetes
+# Bootstrap Recipes
+[group: 'Bootstrap']
+mod bootstrap "bootstrap"
+[group: 'Kube']
+mod kube "kubernetes"
+[group: 'Talos']
+mod talos "Talos"
 
 [private]
 default:
-  just -l
+    just -l
 
 [private]
 log lvl msg *args:

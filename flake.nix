@@ -31,6 +31,7 @@
         {
           default = pkgs.mkShell {
             packages = with pkgs; [
+              kubevirt
               bitwarden-cli
               helmfile
               just
@@ -48,6 +49,7 @@
               age
               lefthook
               yamlfmt
+              ssh-to-age
               # Add more tools here if needed
             ];
 

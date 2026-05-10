@@ -1,7 +1,21 @@
 ---
 machine:
+  install:
+    disk: /dev/sda
+    image: factory.talos.dev/nocloud-installer/5b22cce5228227e19741a198d4632964f5efc15120df12fbe628d2818d194bd0:v1.12.6
   network:
     hostname: controlplane-2.ergho.org
   nodeLabels:
     topology.kubernetes.io/zone: m
   type: controlplane
+
+---
+apiVersion: v1alpha1
+kind: VolumeConfig
+name: EPHEMERAL
+provisioning:
+  diskSelector:
+    match: system_disk
+  minSize: 2GiB
+  maxSize: 200GiB
+  grow: false

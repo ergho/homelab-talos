@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: root-recovery
+spec:
+  containers:
+    - name: recovery
+      image: fedora:latest
+      command:
+        - "/bin/sh"
+        - "-c"
+        - "sleep infinity"
+      securityContext:
+        privileged: true # This gives you the power to mount
+        runAsUser: 0 # This makes you UID 0
+      volumeMounts:
+        - name: vm-disk
+          mountPath: /recovery
+  volumes:
+    - name: vm-disk
+      persistentVolumeClaim:
+        claimName: ubuntu-dv

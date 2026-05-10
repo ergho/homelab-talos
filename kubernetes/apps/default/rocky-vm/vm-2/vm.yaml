@@ -26,7 +26,7 @@ spec:
               macAddress: "02:de:ad:be:ef:01"
         resources:
           requests:
-            memory: 4Gi
+            memory: 1Gi
       networks:
         - name: default
           pod: {}
