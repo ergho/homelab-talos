@@ -1,0 +1,67 @@
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: ceph2
+  namespace: default
+spec:
+  running: true
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: ceph2
+    spec:
+      domain:
+        devices:
+          disks:
+            - name: rootdisk
+              disk:
+                bus: virtio
+            - name: osd1
+              disk:
+                bus: virtio
+            - name: osd2
+              disk:
+                bus: virtio
+            - name: cloudinit
+              disk:
+                bus: virtio
+          interfaces:
+            - name: default
+              masquerade: {}
+              #bridge: {}
+              #macAddress: "02:de:ad:be:ef:01"
+            - name: test
+              bridge: {}
+        resources:
+          requests:
+            memory: 4Gi
+      networks:
+        - name: default
+          pod: {}
+        - name: test
+          multus:
+            networkName: network/test
+      volumes:
+        - name: rootdisk
+          dataVolume:
+            name: ceph2-root
+        - name: osd1
+          persistentVolumeClaim:
+            claimName: ceph2-osd1
+        - name: osd2
+          persistentVolumeClaim:
+            claimName: ceph2-osd2
+        - name: cloudinit
+          cloudInitNoCloud:
+            userData: |-
+              #cloud-config
+              users:
+                - name: ubuntu
+                  sudo: ALL=(ALL) NOPASSWD:ALL
+                  groups: users, admin
+                  shell: /bin/bash
+                  lock_passwd: false
+                  passwd: $6$jlTvpsdWTl8gXHSZ$OpHGKKP0K5wW/9ehymw8RI82S2nO0Lad2qCofoT7nGua/fl3SJr91.KPNEa2i72Opj4q7B8YH6c.i9FDaeWMm0
+              ssh_pwauth: true
+              disable_root: false

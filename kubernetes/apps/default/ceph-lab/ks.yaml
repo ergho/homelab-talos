@@ -21,3 +21,49 @@ spec:
     namespace: flux-system
   targetNamespace: default
   wait: false
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: ceph-lab2
+spec:
+  dependsOn:
+    - name: openebs
+      namespace: openebs-system
+    - name: cdi
+      namespace: kubevirt
+    - name: golden-images
+      namespace: default
+  interval: 1h
+  path: ./kubernetes/apps/default/ceph-lab/ceph2
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: default
+  wait: false
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: ceph-lab3
+spec:
+  dependsOn:
+    - name: openebs
+      namespace: openebs-system
+    - name: cdi
+      namespace: kubevirt
+    - name: golden-images
+      namespace: default
+  interval: 1h
+  path: ./kubernetes/apps/default/ceph-lab/ceph3
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: default
+  wait: false
