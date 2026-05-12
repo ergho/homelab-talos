@@ -9,6 +9,7 @@ spec:
   resources:
     requests:
       storage: 10Gi
+  storageClassName: openebs-hostpath
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -20,3 +21,4 @@ spec:
   resources:
     requests:
       storage: 10Gi
+  storageClassName: openebs-hostpath
