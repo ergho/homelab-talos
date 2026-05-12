@@ -5,4 +5,4 @@ kind: NetworkAttachmentDefinition
 metadata:
   name: test
 spec:
-  config: '{ "cniVersion": "0.3.1", "type": "macvlan", "bridge": "br0.200", "ipam": { "type": "whereabouts", "range": "10.200.0.0/24", "range_start": "10.200.0.50", "range_end" "10.200.0.100" } }'
+  config: '{ "cniVersion": "0.3.1", "type": "macvlan", "bridge": "br0.200", "ipam": { "type": "whereabouts", "range": "10.200.0.0/24", "range_start": "10.200.0.50", "range_end": "10.200.0.100" } }'
