@@ -34,7 +34,7 @@ spec:
           pod: {}
         - name: test
           multus:
-            networkName: test
+            networkName: network/test
       volumes:
         - name: rootdisk
           dataVolume:
