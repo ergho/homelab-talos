@@ -10,6 +10,8 @@ spec:
       namespace: openebs-system
     - name: cdi
       namespace: kubevirt
+    - name: golden-images
+      namespace: default
   interval: 1h
   path: ./kubernetes/apps/default/ceph-lab/ceph1
   prune: true
