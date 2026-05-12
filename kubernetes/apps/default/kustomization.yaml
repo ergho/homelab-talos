@@ -6,6 +6,7 @@ namespace: default
 
 resources:
   - ./namespace.yaml
+  - ./ceph-lab/ks.yaml
   - ./fusion/ks.yaml
   - ./golden-images/ks.yaml
   - ./jellyfin/ks.yaml
