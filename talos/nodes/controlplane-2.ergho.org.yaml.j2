@@ -11,6 +11,35 @@ machine:
 
 ---
 apiVersion: v1alpha1
+kind: BridgeConfig
+name: br0
+links:
+  - eth0
+stp:
+  enabled: true
+
+---
+apiVersion: v1alpha1
+kind: VLANConfig
+name: br0.90
+vlanID: 90
+parent: br0
+addresses:
+  - address: 192.168.90.40/24
+routes:
+  - gateway: 192.168.90.1
+
+---
+apiVersion: v1alpha1
+kind: ResolverConfig
+nameservers:
+  - address: 192.168.90.5
+searchDomains:
+  domains:
+    - ergho.org
+
+---
+apiVersion: v1alpha1
 kind: VolumeConfig
 name: EPHEMERAL
 provisioning:
