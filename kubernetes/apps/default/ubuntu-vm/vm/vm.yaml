@@ -24,12 +24,17 @@ spec:
             - name: default
               bridge: {}
               macAddress: "02:de:ad:be:ef:01"
+            - name: test
+              bridge: {}
         resources:
           requests:
             memory: 4Gi
       networks:
         - name: default
           pod: {}
+        - name: test
+          multus:
+            networkName: test
       volumes:
         - name: rootdisk
           dataVolume:
