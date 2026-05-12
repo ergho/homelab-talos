@@ -31,6 +31,13 @@ routes:
 
 ---
 apiVersion: v1alpha1
+kind: VLANConfig
+name: br0.200
+vlanID: 200
+parent: br0
+
+---
+apiVersion: v1alpha1
 kind: ResolverConfig
 nameservers:
   - address: 192.168.90.5
