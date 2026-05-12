@@ -1,0 +1,17 @@
+---
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: DataVolume
+metadata:
+  name: ubuntu-golden-image
+  namespace: default
+spec:
+  source:
+    http:
+      url: https://cloud-images.ubuntu.com/daily/server/resolute/current/resolute-server-cloudimg-amd64.img
+  pvc:
+    storageClassName: openebs-hostpath
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 8Gi
