@@ -49,6 +49,6 @@ spec:
                   groups: users, admin
                   shell: /bin/bash
                   lock_passwd: false
-                  passwd: $6$Bm/.5mAJ/ZajgrP3$HJ2DWNeCpi7aAZEV.zwqkte1hJJYQ98HE86n83XBJ3wiCTsD10k3.WYo.LkVgUjn3hr047hQAtvg5Illi.nTO0
+                  passwd: $6$jlTvpsdWTl8gXHSZ$OpHGKKP0K5wW/9ehymw8RI82S2nO0Lad2qCofoT7nGua/fl3SJr91.KPNEa2i72Opj4q7B8YH6c.i9FDaeWMm0
               ssh_pwauth: true
               disable_root: false
