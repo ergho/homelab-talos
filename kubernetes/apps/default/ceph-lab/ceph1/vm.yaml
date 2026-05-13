@@ -12,6 +12,8 @@ spec:
         kubevirt.io/domain: ceph1
     spec:
       domain:
+        cpu:
+          cores: 2
         devices:
           disks:
             - name: rootdisk
@@ -35,6 +37,7 @@ spec:
               bridge: {}
         resources:
           requests:
+            cpu: 2
             memory: 4Gi
       networks:
         - name: default
