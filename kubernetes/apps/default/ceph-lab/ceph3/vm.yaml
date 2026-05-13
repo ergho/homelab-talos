@@ -13,6 +13,8 @@ spec:
     spec:
       domain:
         devices:
+          cpu:
+            cores: 2
           disks:
             - name: rootdisk
               disk:
@@ -35,6 +37,7 @@ spec:
               bridge: {}
         resources:
           requests:
+            cpu: 2
             memory: 4Gi
       networks:
         - name: default
